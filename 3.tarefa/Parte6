@@ -1,0 +1,29 @@
+import numpy as np
+
+status = dados[:, -1]
+sucesso = np.sum(status == "Success")
+porcentagem = (sucesso / len(status)) * 100
+print("Porcentagem de sucesso:", porcentagem)
+
+
+gastos = dados[:, 6]
+gastos = gastos[gastos != ""]
+gastos = gastos.astype(float)
+gastos_validos = gastos[gastos > 0]
+print("Média gastos:", gastos_validos.mean())
+
+local = dados[:, 2]
+eua = np.sum(np.char.find(local, "USA") != -1)
+print("Missões EUA:", eua)
+
+
+empresa = dados[:, 1]
+gastos = dados[:, 6].astype(float)
+mask = empresa == "SpaceX"
+print("Missão mais cara SpaceX:", gastos[mask].max())
+
+
+empresas, qtd = np.unique(empresa, return_counts=True)
+
+for i in range(len(empresas)):
+    print(empresas[i], "-", qtd[i])
