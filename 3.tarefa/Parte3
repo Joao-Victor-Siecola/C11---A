@@ -1,0 +1,29 @@
+import numpy as np
+
+
+campo = np.zeros((2,2))
+
+
+linha = np.random.randint(0,2)
+coluna = np.random.randint(0,2)
+
+campo[linha, coluna] = 1
+
+tentativas = 0
+acertos = 0
+
+while tentativas < 3:
+    l = int(input("Linha (0 ou 1): "))
+    c = int(input("Coluna (0 ou 1): "))
+
+    if campo[l, c] == 1:
+        print("Game Over! :( Try Again!")
+        break
+    else:
+        print("Posição segura!")
+        acertos += 1
+
+    tentativas += 1
+
+    if acertos == 3:
+        print("Congratulations! You beat the game! :)")
