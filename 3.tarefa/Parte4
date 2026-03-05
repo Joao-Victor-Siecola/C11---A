@@ -1,0 +1,15 @@
+import numpy as np
+
+mtz = np.random.randint(1, 10, (3,5))
+
+print(mtz)
+
+linhas = mtz.shape[0]
+colunas = mtz.shape[1]
+
+total = linhas * colunas
+
+if total % 2 == 0:
+    print("Pode virar vetor com número PAR de elementos")
+else:
+    print("Pode virar vetor com número ÍMPAR de elementos")
