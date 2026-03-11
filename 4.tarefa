@@ -2,6 +2,9 @@ import numpy as np
 from google.colab import files
 uploaded = files.upload()
 
+dataset = np.loadtxt('space.csv', delimiter=';', dtype=str, encoding='utf-8')
+dados = dataset[1:]
+
 status = dados[:,7]
 sucesso = np.sum(status == "Success")
 porcentagem = (sucesso / len(status)) * 100
