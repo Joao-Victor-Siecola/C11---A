@@ -1,0 +1,28 @@
+import numpy as np
+from google.colab import files
+uploaded = files.upload()
+
+status = dados[:,7]
+sucesso = np.sum(status == "Success")
+porcentagem = (sucesso / len(status)) * 100
+print("Porcentagem de sucesso:", porcentagem, "%")
+
+gastos = dados[:,6].astype(float)
+gastos_validos = gastos[gastos > 0]
+media = gastos_validos.mean()
+print(f"Média de gastos das missões: ${media:.2f} milhões")
+
+local = dados[:,2]
+eua = np.sum(np.char.find(local, "USA") != -1)
+print("Missões realizadas pelos EUA:", eua)
+
+
+empresa = dados[:,1]
+mask = empresa == "SpaceX"
+print("Missão mais cara da SpaceX: $", gastos[mask].max(), "milhões")
+
+
+empresas, qtd = np.unique(empresa, return_counts=True)
+print("\nEmpresas e quantidade de missões:")
+for i in range(len(empresas)):
+    print(empresas[i], "-", qtd[i])
