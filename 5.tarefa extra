@@ -1,0 +1,33 @@
+import numpy as np
+from google.colab import files
+uploaded = files.upload()
+
+dataset = np.loadtxt('paises.csv', delimiter=';', dtype=str, encoding='latin1')
+dados = dataset[1:]
+
+
+print("Questão 1:")
+print(dados[:, [0, 1, 2, 3]])
+
+
+regioes = np.char.strip(dados[:, 1])
+valores_regiao = np.unique(regioes)
+print("\nQuantidade de regiões diferentes:", len(valores_regiao))
+
+
+alfabetizacao = dados[:, 9].astype(float)
+media_alfabetizacao = alfabetizacao.mean()
+print("Média da taxa de alfabetização:", round(media_alfabetizacao, 2))
+
+
+america_norte = np.sum(regioes == "NORTHERN AMERICA")
+print("Quantidade de países da América do Norte:", america_norte)
+
+
+mask = regioes == "LATIN AMER. & CARIB"
+paises_latam = np.char.strip(dados[mask, 0])
+gdp = dados[mask, 8].astype(float)
+
+indice = np.argmax(gdp)
+print("País com maior GDP per capita da América Latina e Caribe:", paises_latam[indice])
+print("Maior GDP per capita:", gdp[indice])
