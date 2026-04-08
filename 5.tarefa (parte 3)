@@ -1,0 +1,44 @@
+import pandas as pd
+from google.colab import files
+
+uploaded = files.upload()
+nome_arquivo = list(uploaded.keys())[0]
+
+df = pd.read_csv(nome_arquivo, delimiter=';', encoding='latin1')
+
+df.columns = df.columns.str.strip()
+df['Country'] = df['Country'].str.strip()
+df['Region'] = df['Region'].str.strip()
+
+oceania = df[df['Region'].str.contains('OCEANIA', na=False)]
+
+print("Países da OCEANIA:")
+print(oceania['Country'])
+
+print("\nQuantidade de países da OCEANIA:", len(oceania))
+
+maior_pop = df.loc[df['Population'].idxmax()]
+print("\nPaís com maior população:")
+print("Nome:", maior_pop['Country'])
+print("Região:", maior_pop['Region'])
+
+media_alfabetizacao = df.groupby('Region')['Literacy (%)'].mean()
+print("\nMédia de alfabetização por região:")
+print(media_alfabetizacao)
+
+sem_costa = df[df['Coastline (coast/area ratio)'] == 0]
+sem_costa[['Country']].to_csv('noCoast.csv', index=False)
+
+print("\nPaíses sem costa marítima:")
+print(sem_costa['Country'])
+
+def ajuda_humanitaria(x):
+    if x < 9:
+        return 'Balanced'
+    else:
+        return 'Urgent'
+
+df['Humanitarian Help'] = df['Deathrate'].apply(ajuda_humanitaria)
+
+print("\nDataset com a nova coluna:")
+print(df)
